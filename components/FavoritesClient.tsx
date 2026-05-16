@@ -1,13 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star, Trash2 } from "lucide-react";
 import ResourceCard from "@/components/ResourceCard";
-import { getFavoriteIds, toggleFavorite, filterResourcesByIds } from "@/lib/bookmarks";
+import {
+  FAVORITES_CHANGED_EVENT,
+  getFavoriteIds,
+  toggleFavorite,
+  filterResourcesByIds,
+} from "@/lib/bookmarks";
 import type { Resource } from "@/data/resource-types";
 
 export default function FavoritesClient({ resources }: { resources: Resource[] }) {
-  const [ids, setIds] = useState(() => getFavoriteIds());
+  const [hydrated, setHydrated] = useState(false);
+  const [ids, setIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    function refreshFavorites() {
+      setIds(getFavoriteIds());
+    }
+
+    const id = window.setTimeout(() => {
+      refreshFavorites();
+      setHydrated(true);
+    }, 0);
+    window.addEventListener(FAVORITES_CHANGED_EVENT, refreshFavorites);
+    window.addEventListener("storage", refreshFavorites);
+
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener(FAVORITES_CHANGED_EVENT, refreshFavorites);
+      window.removeEventListener("storage", refreshFavorites);
+    };
+  }, []);
 
   function handleRemoveAll() {
     ids.forEach((id) => toggleFavorite(id));
@@ -31,7 +56,11 @@ export default function FavoritesClient({ resources }: { resources: Resource[] }
         </div>
       )}
 
-      {favorited.length === 0 ? (
+      {!hydrated ? (
+        <div className="py-20 text-center text-sm" style={{ color: "var(--muted)" }}>
+          正在加载收藏...
+        </div>
+      ) : favorited.length === 0 ? (
         <div
           className="text-center py-20"
           style={{ color: "var(--muted)" }}
@@ -40,7 +69,7 @@ export default function FavoritesClient({ resources }: { resources: Resource[] }
           <p className="text-sm">还没有收藏，浏览资源时点击星标图标即可收藏</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] md:gap-4">
           {favorited.map((resource) => (
             <ResourceCard
               key={resource.id}

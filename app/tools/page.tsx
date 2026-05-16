@@ -48,10 +48,35 @@ const inputStyle = {
 
 const secondaryBtn = "px-3 py-1.5 rounded-lg text-[12px] font-medium transition-opacity hover:opacity-70";
 const primaryBtn = "px-3 py-1.5 rounded-lg text-[12px] font-medium text-white transition-opacity hover:opacity-90";
+const defaultTimestamp = "1704067200";
+const defaultUuids = [
+  "018cc251-f0c0-4e9b-8b72-1d2ce6a1a001",
+  "018cc251-f0c0-4e9b-8b72-1d2ce6a1a002",
+  "018cc251-f0c0-4e9b-8b72-1d2ce6a1a003",
+];
+
+function formatTimestamp(value: string) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return "时间戳格式错误";
+  const ms = value.length === 10 ? num * 1000 : num;
+  const date = new Date(ms);
+  if (Number.isNaN(date.getTime())) return "时间戳格式错误";
+
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).format(date);
+}
 
 export default function ToolsPage() {
-  const [jsonInput, setJsonInput] = useState('{"name":"开发者导航","type":"tool"}');
-  const [timestamp, setTimestamp] = useState(() => String(Math.floor(Date.now() / 1000)));
+  const [jsonInput, setJsonInput] = useState('{"name":"百宝箱","type":"tool"}');
+  const [timestamp, setTimestamp] = useState(defaultTimestamp);
   const [text, setText] = useState("Hello Developer");
 
   const formattedJson = useMemo(() => {
@@ -62,14 +87,7 @@ export default function ToolsPage() {
     }
   }, [jsonInput]);
 
-  const dateText = useMemo(() => {
-    const num = Number(timestamp);
-    if (!Number.isFinite(num)) return "时间戳格式错误";
-    const ms = timestamp.length === 10 ? num * 1000 : num;
-    const date = new Date(ms);
-    if (Number.isNaN(date.getTime())) return "时间戳格式错误";
-    return date.toLocaleString("zh-CN");
-  }, [timestamp]);
+  const dateText = useMemo(() => formatTimestamp(timestamp), [timestamp]);
 
   async function copy(value: string) {
     await navigator.clipboard.writeText(value);
@@ -151,7 +169,7 @@ export default function ToolsPage() {
 }
 
 function Base64Tool() {
-  const [input, setInput] = useState("开发者导航");
+  const [input, setInput] = useState("百宝箱");
   const encoded = useMemo(() => {
     try { return btoa(unescape(encodeURIComponent(input))); } catch { return "编码失败"; }
   }, [input]);
@@ -210,13 +228,17 @@ function UrlTool() {
 }
 
 function UuidTool() {
-  const gen = () =>
-    "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+  function gen() {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
       const v = c === "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
-  const [list, setList] = useState<string[]>(() => Array.from({ length: 3 }, gen));
+  }
+
+  const [list, setList] = useState<string[]>(defaultUuids);
   return (
     <div>
       <div className="flex flex-col gap-1.5 mb-2">

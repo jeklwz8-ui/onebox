@@ -662,7 +662,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-984",
+    "id": "baoboxs-984-hot",
     "name": "BeJson",
     "url": "https://www.bejson.com/explore/index_new",
     "description": "Json格式化工具",
@@ -816,7 +816,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-661",
+    "id": "baoboxs-661-hot",
     "name": "公众号",
     "url": "https://mp.weixin.qq.com",
     "description": "微信公众号管理后台。",
@@ -860,7 +860,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-660",
+    "id": "baoboxs-660-hot",
     "name": "文件格式转换",
     "url": "https://convertio.co/zh",
     "description": "支持300多种格式互转的在线文件转换工具、",
@@ -904,7 +904,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-639",
+    "id": "baoboxs-639-hot",
     "name": "Linux命令大全",
     "url": "https://www.linuxcool.com",
     "description": "在线查询Linux各种指令的说明及使用教程。",
@@ -992,7 +992,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1067",
+    "id": "baoboxs-1067-hot",
     "name": "Github",
     "url": "https://github.com",
     "description": "GitHub是世界上最大的代码托管平台,超5千万开发者正在使用。",
@@ -1014,7 +1014,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-657",
+    "id": "baoboxs-657-hot",
     "name": "百度翻译",
     "url": "https://fanyi.baidu.com/translate",
     "description": "百度在线翻译工具。",
@@ -1102,7 +1102,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1017",
+    "id": "baoboxs-1017-hot",
     "name": "随机密码生成",
     "url": "https://suijimimashengcheng.bmcx.com",
     "description": "随机生成安全级别较高的密码",
@@ -1124,7 +1124,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-664",
+    "id": "baoboxs-664-hot",
     "name": "时间戳转换 (Unix-北京)",
     "url": "https://tool.lu/timestamp",
     "description": "时间戳与日期在线转换。",
@@ -1146,7 +1146,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-645",
+    "id": "baoboxs-645-hot",
     "name": "在线文本对比",
     "url": "https://text-compare.com/zh-hans",
     "description": "一款在线的文本对比工具",
@@ -1256,7 +1256,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1026",
+    "id": "baoboxs-1026-hot",
     "name": "变量命名神器",
     "url": "https://unbug.github.io/codelf",
     "description": "Codelf 是通过搜索在线开源平台匹配最优变量名",
@@ -1278,7 +1278,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-352",
+    "id": "baoboxs-352-devtools",
     "name": "IntelliJ IDEA",
     "url": "https://www.jetbrains.com/idea",
     "description": "Java 最好用的编程工具！",
@@ -1300,7 +1300,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-353",
+    "id": "baoboxs-353-devtools",
     "name": "IDEA 永久激活",
     "url": "https://blog.lupf.cn/category/idea",
     "description": "免费获取激活码和激活工具",
@@ -1410,7 +1410,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-356",
+    "id": "baoboxs-356-devtools",
     "name": "Navicat",
     "url": "https://www.navicat.com.cn/",
     "description": "数据库常用客户端工具",
@@ -3060,7 +3060,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1104",
+    "id": "baoboxs-1104-ai",
     "name": "腾讯元宝",
     "url": "https://yuanbao.tencent.com/",
     "description": "集成DeepSeek满血版，混元模型",
@@ -3082,7 +3082,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1105",
+    "id": "baoboxs-1105-ai",
     "name": "DeepSeek",
     "url": "https://chat.deepseek.com/",
     "description": "国产优质大模型",
@@ -3192,7 +3192,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-1111",
+    "id": "baoboxs-1111-ai",
     "name": "字节​​豆包",
     "url": "https://www.doubao.com",
     "description": "全能型AI助手，支持角色扮演、视频字幕生成，多模态功能覆盖广",
@@ -8515,7 +8515,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-1555",
+    "id": "baoboxs-1555-moyu",
     "name": "假装升级",
     "url": "https://www.fakeupdate.net/",
     "description": "假装电脑升级，模拟win7、win10、win11、Mac系统升级，乘机摸鱼",
@@ -8557,7 +8557,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-304",
+    "id": "baoboxs-304-moyu",
     "name": "知乎",
     "url": "https://www.zhihu.com",
     "description": "中国最大的问答社区",
@@ -8599,7 +8599,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-543",
+    "id": "baoboxs-543-moyu",
     "name": "模拟黑客",
     "url": "https://geektyper.com",
     "description": "是一款极具趣味性的模拟黑客软件，它能让你像电影中的黑客高手一样，在电脑或手机上展现出专业程序员的操作风采。通过模拟黑客桌面环境和各种逼真的操作效果，GeekTyper 为用户带来独特的体验，无论是用于娱乐、学习还是展示，都具有很高的实用价值。",
@@ -8620,7 +8620,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-312",
+    "id": "baoboxs-312-moyu",
     "name": "空间站对接",
     "url": "https://iss-sim.spacex.com",
     "description": "SpaceX出品的空间站对接模拟器",
@@ -8704,7 +8704,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-322",
+    "id": "baoboxs-322-moyu",
     "name": "搞笑视频",
     "url": "https://neave.tv",
     "description": "随机播放搞笑视频，点击鼠标切换",
@@ -8746,7 +8746,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-324",
+    "id": "baoboxs-324-moyu",
     "name": "实时地球",
     "url": "https://zoom.earth",
     "description": "实时地球图像；每 10 分钟更新一次；提供风暴、天气预报、降水、火警等数据",
@@ -8809,7 +8809,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1405",
+    "id": "baoboxs-1405-moyu",
     "name": "千亿像素看世界",
     "url": "http://pf.bigpixel.cn/zh-CN.html",
     "description": "放大万倍体验中国城市、世界城市，展现城市特色，讲好中华文化。",
@@ -8851,7 +8851,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-1260",
+    "id": "baoboxs-1260-moyu",
     "name": "退休计算器",
     "url": "https://daojishi.fun",
     "description": "精确计算您的法定退休年龄,并可视化您距离退休的时间。提供全屏显示、屏保模式、数据保存和深色模式等功能,助您提前规划,从容迎接退休生活。适用于各行业、各年龄段的中国工作者。",
@@ -8914,7 +8914,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-306",
+    "id": "baoboxs-306-moyu",
     "name": "摸摸鱼热榜",
     "url": "https://momoyu.cc",
     "description": "聚合12榜单热门资讯",
@@ -9332,7 +9332,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
-    "id": "baoboxs-1319",
+    "id": "baoboxs-1319-moyu",
     "name": "桌游合集",
     "url": "https://game.hullqin.cn",
     "description": "包含一些联机网页游戏：卡坦岛、璀璨宝石、卡卡颂、飞行棋、UNO、谁是卧底、阿瓦隆、一夜狼、狼人杀、行动代号、拉密、德国心脏病、爆炸猫、毒药、出包魔法师、达芬奇密码、五子棋、围棋、象棋、国际象棋、军棋、跳棋、黑白棋、斗地主、井字棋、路墙棋、炸飞机、摇色子、酒吧游戏。公众号：线下聚会游戏。无广告，纯净版，支持在线联机对战。让你聚会时不带任何道具，就能跟朋友一起玩桌游。无需下载，点开即玩！享受纯粹的游戏！",
@@ -9552,7 +9552,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-292",
+    "id": "baoboxs-292-community",
     "name": "CSDN",
     "url": "https://www.csdn.net",
     "description": "中文最大的技术社区",
@@ -10256,7 +10256,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-1100",
+    "id": "baoboxs-1100-plugins",
     "name": "Google插件下载",
     "url": "https://chrome.zzzmh.cn/",
     "description": "收录热门好用的Chrome插件扩展，国内最方便的插件下载网站。",
@@ -11202,7 +11202,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-329",
+    "id": "baoboxs-329-docs",
     "name": "菜鸟教程",
     "url": "https://www.runoob.com",
     "description": "学的不仅是技术，更是梦想！",
@@ -15668,7 +15668,7 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": false
   },
   {
-    "id": "baoboxs-990",
+    "id": "baoboxs-990-design",
     "name": "4K壁纸",
     "url": "https://pic.netbian.com",
     "description": "免费4K壁纸站",

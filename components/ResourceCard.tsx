@@ -73,7 +73,7 @@ export default function ResourceCard({
       tabIndex={hasUrl ? 0 : undefined}
       onClick={openResource}
       onKeyDown={handleCardKeyDown}
-      className={`group resource-card relative flex min-h-[112px] flex-col rounded-xl border p-3.5 transition-all duration-200 hover:-translate-y-0.5 ${
+      className={`group resource-card relative flex min-h-[104px] flex-col rounded-lg border p-2.5 transition-all duration-200 hover:-translate-y-0.5 md:min-h-[112px] md:rounded-xl md:p-3.5 ${
         hasUrl ? "cursor-pointer" : ""
       }`}
       style={{
@@ -81,17 +81,17 @@ export default function ResourceCard({
         borderColor: "var(--card-border)",
       }}
     >
-      <div className="flex items-start gap-2.5">
+      <div className="flex items-start gap-2 md:gap-2.5">
         <div className="shrink-0">
           <div
-            className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border transition-transform duration-200 group-hover:scale-105"
+            className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border transition-transform duration-200 group-hover:scale-105 md:h-10 md:w-10 md:rounded-xl"
             style={{ background: "var(--search-bg)", borderColor: "var(--card-border)" }}
           >
             {!imgError && faviconUrl ? (
               <img
                 src={faviconUrl}
                 alt=""
-                className="h-5 w-5 object-contain"
+                className="h-4 w-4 object-contain md:h-5 md:w-5"
                 loading="lazy"
                 decoding="async"
                 onError={() => setImgError(true)}
@@ -107,7 +107,7 @@ export default function ResourceCard({
         <div className="min-w-0 flex-1 pt-0.5">
           <div className="flex items-center gap-1 leading-tight">
             <span
-              className="truncate text-[14px] font-bold"
+              className="truncate text-[12.5px] font-bold md:text-[14px]"
               style={{ color: "var(--foreground)" }}
             >
               {resource.name}
@@ -122,7 +122,7 @@ export default function ResourceCard({
               <Link2Off size={12} className="mt-px shrink-0" style={{ color: "var(--muted)" }} />
             )}
           </div>
-          <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          <div className="mt-1.5 flex flex-wrap items-center gap-1 md:mt-2 md:gap-1.5">
             <Badge>{resource.subcategory}</Badge>
             {!hasUrl && <Badge>待补链接</Badge>}
             {resource.lang && <Badge>{resource.lang.toUpperCase()}</Badge>}
@@ -142,9 +142,9 @@ export default function ResourceCard({
         </div>
       </div>
 
-      <div className="mt-2.5 block flex-1">
+      <div className="mt-2 block flex-1 md:mt-2.5">
         <p
-          className="line-clamp-2 text-[13px] leading-[1.65]"
+          className="line-clamp-1 text-[12px] leading-[1.55] md:line-clamp-2 md:text-[13px] md:leading-[1.65]"
           style={{ color: "var(--muted)" }}
         >
           {resource.description}

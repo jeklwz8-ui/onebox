@@ -85,6 +85,16 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -121,6 +131,14 @@ body {
 }
 .sidebar-nav-scroll::-webkit-scrollbar-thumb:hover {
   background: var(--muted);
+}
+
+.section-nav-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.section-nav-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-link:hover {

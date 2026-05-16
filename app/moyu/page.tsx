@@ -3,7 +3,7 @@ import CategorySection from "@/components/CategorySection";
 import SectionNav from "@/components/SectionNav";
 
 export const metadata = {
-  title: "摸鱼专区 - 开发者导航",
+  title: "摸鱼专区 - 百宝箱",
   description: "摸鱼休闲好去处，工作之余放松一下",
 };
 

@@ -17,10 +17,12 @@ interface NavbarProps {
 
 export default function Navbar({ onSidebarToggle }: NavbarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const mobileInputRef = useRef<HTMLInputElement>(null);
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [favCount, setFavCount] = useState(0);
   const [results, setResults] = useState<Resource[]>([]);
 
@@ -80,6 +82,18 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
     };
   }, [query]);
 
+  useEffect(() => {
+    if (!mobileSearchOpen) return;
+    const id = window.setTimeout(() => mobileInputRef.current?.focus(), 0);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.clearTimeout(id);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileSearchOpen]);
+
   function handleToggleTheme() {
     const next = toggleTheme();
     setIsDark(next === "dark");
@@ -107,12 +121,12 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
             <PanelLeftClose size={14} className="text-white" />
           </button>
           <Code2 size={16} className="hidden sm:block" style={{ color: "var(--accent)" }} />
-          <Link href="/" className="font-bold text-[15px] hidden sm:block" style={{ color: "var(--foreground)" }}>
-            开发者导航
+          <Link href="/" className="font-bold text-[15px]" style={{ color: "var(--foreground)" }}>
+            百宝箱
           </Link>
         </div>
 
-        <div className="flex-1 flex justify-center">
+        <div className="hidden flex-1 justify-center md:flex">
           <div className="relative w-full max-w-xl">
             <div
               className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-colors duration-150"
@@ -156,11 +170,16 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
               )}
             </div>
 
-            {showResults && visibleResults.length > 0 && (
+            {showResults && (
               <div
                 className="absolute top-full mt-1 w-full rounded-lg shadow-xl border overflow-hidden z-50"
                 style={{ background: "var(--card)", borderColor: "var(--card-border)" }}
               >
+                {visibleResults.length === 0 && (
+                  <div className="px-4 py-5 text-center text-[13px]" style={{ color: "var(--muted)" }}>
+                    未找到匹配资源
+                  </div>
+                )}
                 {visibleResults.map((resource, index) => {
                   const hasUrl = resource.url.trim().length > 0;
                   const content = (
@@ -220,13 +239,35 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
           </div>
         </div>
 
-        <div className="flex items-center gap-0.5 shrink-0">
+        <div className="flex-1 md:hidden" />
+
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            type="button"
+            onClick={() => {
+              setMobileSearchOpen(true);
+              setShowResults(true);
+            }}
+            title="搜索"
+            className="relative flex h-9 items-center justify-center rounded-lg px-2.5 transition-colors md:hidden"
+            style={{ color: "var(--muted)" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "var(--sidebar-hover)";
+              (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.color = "var(--muted)";
+            }}
+          >
+            <Search size={17} />
+          </button>
           <IconLink href="/favorites" title="收藏" count={mounted ? favCount : 0}>
-            <Star size={16} />
+            <Star size={17} />
           </IconLink>
           <button
             onClick={handleToggleTheme}
-            className="relative w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
+            className="relative h-9 rounded-lg flex items-center justify-center gap-1.5 px-2.5 transition-colors"
             style={{ color: "var(--muted)" }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background = "var(--sidebar-hover)";
@@ -242,11 +283,123 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
               className="inline-flex transition-transform duration-300"
               style={{ transform: mounted && isDark ? "rotate(360deg)" : "rotate(0deg)" }}
             >
-              {mounted ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : <Moon size={16} />}
+              {mounted ? (isDark ? <Sun size={17} /> : <Moon size={17} />) : <Moon size={17} />}
             </span>
+            <span className="hidden md:inline text-[13px] font-medium">主题</span>
           </button>
         </div>
       </div>
+
+      {mobileSearchOpen && (
+        <div className="fixed inset-0 z-[90] md:hidden">
+          <button
+            type="button"
+            aria-label="关闭搜索"
+            className="absolute inset-0 bg-slate-950/45 backdrop-blur-[2px]"
+            onClick={() => setMobileSearchOpen(false)}
+          />
+          <div
+            className="absolute inset-x-3 top-3 max-h-[calc(100vh-24px)] overflow-hidden rounded-xl border shadow-2xl"
+            style={{ background: "var(--card)", borderColor: "var(--card-border)" }}
+          >
+            <div className="flex items-center gap-2 border-b p-3" style={{ borderColor: "var(--card-border)" }}>
+              <Search size={16} style={{ color: "var(--muted)" }} />
+              <input
+                ref={mobileInputRef}
+                type="text"
+                placeholder="搜索工具、资源、分类..."
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setShowResults(e.target.value.trim().length > 0);
+                }}
+                className="min-w-0 flex-1 bg-transparent text-[15px] outline-none"
+                style={{ color: "var(--foreground)" }}
+              />
+              {query && (
+                <button onClick={() => setQuery("")} className="p-1" title="清空搜索">
+                  <X size={16} style={{ color: "var(--muted)" }} />
+                </button>
+              )}
+              <button
+                onClick={() => setMobileSearchOpen(false)}
+                className="rounded-lg px-2 py-1 text-[13px] font-medium"
+                style={{ background: "var(--search-bg)", color: "var(--foreground)" }}
+              >
+                关闭
+              </button>
+            </div>
+
+            <div className="max-h-[calc(100vh-92px)] overflow-y-auto">
+              {!query.trim() && (
+                <div className="px-4 py-8 text-center text-[13px]" style={{ color: "var(--muted)" }}>
+                  输入关键词搜索资源
+                </div>
+              )}
+              {query.trim() && visibleResults.length === 0 && (
+                <div className="px-4 py-8 text-center text-[13px]" style={{ color: "var(--muted)" }}>
+                  未找到匹配资源
+                </div>
+              )}
+              {visibleResults.map((resource, index) => {
+                const hasUrl = resource.url.trim().length > 0;
+                const content = (
+                  <>
+                    <img
+                      src={getFaviconUrl(resource.url, resource.icon)}
+                      alt=""
+                      className="h-6 w-6 rounded object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-[14px] font-semibold" style={{ color: "var(--foreground)" }}>
+                        {resource.name}
+                      </div>
+                      <div className="truncate text-[12px]" style={{ color: "var(--muted)" }}>
+                        {resource.description}
+                      </div>
+                    </div>
+                    <span
+                      className="shrink-0 rounded-full px-2 py-0.5 text-[11px]"
+                      style={{ background: "var(--tag-bg)", color: "var(--tag-text)" }}
+                    >
+                      {hasUrl ? categoryMap.get(resource.category)?.label ?? resource.subcategory : "待补链接"}
+                    </span>
+                  </>
+                );
+
+                if (!hasUrl) {
+                  return (
+                    <div
+                      key={`${resource.id}-${resource.category}-${index}`}
+                      className="flex items-center gap-3 border-b px-4 py-3 last:border-b-0"
+                      style={{ borderColor: "var(--card-border)" }}
+                    >
+                      {content}
+                    </div>
+                  );
+                }
+
+                return (
+                  <a
+                    key={`${resource.id}-${resource.category}-${index}`}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileSearchOpen(false)}
+                    className="flex items-center gap-3 border-b px-4 py-3 last:border-b-0"
+                    style={{ borderColor: "var(--card-border)" }}
+                  >
+                    {content}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -260,7 +413,7 @@ function IconLink({
     <Link
       href={href}
       title={title}
-      className="relative w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
+      className="relative h-9 rounded-lg flex items-center justify-center gap-1.5 px-2.5 transition-colors"
       style={{ color: "var(--muted)" }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.background = "var(--sidebar-hover)";
@@ -272,6 +425,7 @@ function IconLink({
       }}
     >
       {children}
+      <span className="hidden md:inline text-[13px] font-medium">{title}</span>
       {count > 0 && (
         <span
           className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 rounded-full text-[10px] font-bold flex items-center justify-center"

@@ -14,19 +14,19 @@ export default function SectionNav({ items }: SectionNavProps) {
 
   return (
     <nav
-      className="sticky top-0 z-40 -mx-5 mb-6 border-b px-5 py-1.5 backdrop-blur sm:-mx-6 sm:px-6"
+      className="sticky top-0 z-40 -mx-3 mb-4 border-b px-3 py-1.5 backdrop-blur sm:-mx-6 sm:mb-6 sm:px-6"
       style={{
         background: "var(--section-nav-bg)",
         borderColor: "var(--card-border)",
       }}
     >
       <div className="mx-auto flex max-w-screen-2xl items-center">
-        <div className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto py-px">
+        <div className="section-nav-scroll flex min-w-0 flex-1 gap-1.5 overflow-x-auto py-px">
           {items.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="inline-flex h-[26px] shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-bold leading-none transition-colors hover:border-[var(--accent)]"
+              className="inline-flex h-[28px] shrink-0 items-center gap-1.5 rounded-full border px-3 text-[12px] font-bold leading-none transition-colors hover:border-[var(--accent)] sm:h-[26px] sm:text-[13px]"
               style={{
                 background: "var(--nav-pill-bg)",
                 borderColor: "var(--nav-pill-border)",

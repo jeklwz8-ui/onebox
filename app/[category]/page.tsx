@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
   const cat = categories.find((item) => item.id === category);
   if (!cat) return {};
   return {
-    title: `${cat.label} - 开发者导航`,
+    title: `${cat.label} - 百宝箱`,
     description: cat.description,
   };
 }

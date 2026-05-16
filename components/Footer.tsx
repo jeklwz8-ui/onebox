@@ -37,8 +37,8 @@ export default function Footer() {
         background: "var(--card)",
       }}
     >
-      <div className="max-w-screen-2xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+      <div className="max-w-screen-2xl mx-auto px-4 py-5 sm:px-6 sm:py-8">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2 mb-2">
@@ -49,11 +49,11 @@ export default function Footer() {
                 <Code2 size={14} className="text-white" />
               </div>
               <span className="font-bold text-[14px]" style={{ color: "var(--foreground)" }}>
-                开发者导航
+                百宝箱
               </span>
             </div>
-            <p className="text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
-              程序员一站式工具与资源导航平台
+            <p className="text-[11px] leading-relaxed sm:text-[12px]" style={{ color: "var(--muted)" }}>
+              面向开发者和效率用户的一站式资源导航平台
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export default function Footer() {
           {FOOTER_LINKS.map((col) => (
             <div key={col.title}>
               <h3
-                className="text-[11px] font-semibold tracking-[0.1em] uppercase mb-3"
+                className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] sm:mb-3"
                 style={{ color: "var(--muted)" }}
               >
                 {col.title}
@@ -97,7 +97,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div
-          className="mt-8 pt-5 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between text-[11px]"
+          className="mt-5 flex flex-col gap-1.5 pt-4 text-[11px] sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:pt-5"
           style={{ borderTop: "1px solid var(--card-border)", color: "var(--muted)" }}
         >
           <span>用 ❤️ 构建</span>

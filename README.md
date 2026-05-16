@@ -1,6 +1,6 @@
-# 开发者导航
+# 百宝箱
 
-融合 `cxy521.com` 与 `baoboxs.com` 风格的程序员一站式导航站，基于 Next.js + React + TailwindCSS 构建。
+百宝箱是面向开发者和效率用户的一站式资源导航平台，基于 Next.js + React + TailwindCSS 构建。
 
 ## 功能
 

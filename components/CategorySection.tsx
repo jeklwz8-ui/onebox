@@ -43,7 +43,7 @@ export default function CategorySection({
           style={{ background: "var(--card-border)" }}
         />
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] md:gap-4">
         {resources.map((r) => (
           <ResourceCard key={r.id} resource={r} />
         ))}

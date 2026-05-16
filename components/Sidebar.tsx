@@ -16,7 +16,7 @@ interface SidebarProps {
   onClose?: () => void;
   collapsed?: boolean;
   onToggleCollapse?: () => void;
-  width?: number;
+  width?: number | string;
   categoryCounts: Record<string, number>;
 }
 
@@ -196,7 +196,7 @@ export default function Sidebar({
     <aside
       className="sidebar-scope h-full flex flex-col overflow-hidden"
       style={{
-        width: collapsed ? "52px" : `${width}px`,
+        width: collapsed ? "52px" : typeof width === "number" ? `${width}px` : width,
         transition: "width 0.2s ease",
         background: "var(--sidebar-bg)",
         borderRight: "1px solid var(--sidebar-border)",
