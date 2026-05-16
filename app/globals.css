@@ -1,8 +1,77 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f0f2f5;
+  --bg-secondary: #f0f2f5;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-border: #e5e7eb;
+  --card-hover-shadow: 0 14px 36px rgba(15,23,42,0.1);
+  --hero-bg: linear-gradient(135deg, #ffffff 0%, #eef2ff 55%, #f8fafc 100%);
+  --hero-glow: rgba(79,70,229,0.22);
+  --hero-stat-bg: rgba(255,255,255,0.72);
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-hover: #f3f4f6;
+  --sidebar-active: #eef2ff;
+  --sidebar-active-border: #c7d2fe;
+  --sidebar-active-shadow: 0 6px 16px rgba(79,70,229,0.14);
+  --sidebar-hover-border: #d8def0;
+  --sidebar-hover-shadow: 0 4px 12px rgba(15,23,42,0.08);
+  --sidebar-active-text: #4f46e5;
+  --sidebar-indicator: #4f46e5;
+  --sidebar-heading: #374151;
+  --navbar-bg: rgba(255,255,255,0.85);
+  --navbar-blur: blur(12px);
+  --muted: #6b7280;
+  --accent: #4f46e5;
+  --accent-light: #eef2ff;
+  --tag-bg: #eef2ff;
+  --tag-text: #4f46e5;
+  --nav-pill-bg: rgba(255,255,255,0.88);
+  --nav-pill-border: #dbe1ea;
+  --nav-pill-shadow: 0 1px 2px rgba(15,23,42,0.06);
+  --search-bg: #f3f4f6;
+  --tooltip-bg: #1f2937;
+  --tooltip-text: #f9fafb;
+}
+
+.dark {
+  --background: #0b0f19;
+  --bg-secondary: #0b0f19;
+  --foreground: #e5e7eb;
+  --card: #111827;
+  --card-border: #1f2937;
+  --card-hover-shadow: 0 14px 36px rgba(0,0,0,0.38);
+  --hero-bg: linear-gradient(135deg, #111827 0%, #1e2746 58%, #0b0f19 100%);
+  --hero-glow: rgba(129,140,248,0.22);
+  --hero-stat-bg: rgba(15,23,42,0.62);
+  --sidebar-bg: #111827;
+  --sidebar-border: #1f2937;
+  --sidebar-hover: #1a2235;
+  --sidebar-active: #1e2746;
+  --sidebar-active-border: #3730a3;
+  --sidebar-active-shadow: 0 8px 20px rgba(0,0,0,0.32);
+  --sidebar-hover-border: #2b3548;
+  --sidebar-hover-shadow: 0 6px 16px rgba(0,0,0,0.22);
+  --sidebar-active-text: #818cf8;
+  --sidebar-indicator: #818cf8;
+  --sidebar-heading: #d1d5db;
+  --navbar-bg: rgba(17,24,39,0.85);
+  --navbar-blur: blur(12px);
+  --muted: #9ca3af;
+  --accent: #818cf8;
+  --accent-light: #1e2746;
+  --tag-bg: #1e2746;
+  --tag-text: #a5b4fc;
+  --nav-pill-bg: rgba(17,24,39,0.88);
+  --nav-pill-border: #263244;
+  --nav-pill-shadow: 0 1px 2px rgba(0,0,0,0.28);
+  --search-bg: #1a2235;
+  --tooltip-bg: #0f172a;
+  --tooltip-text: #f1f5f9;
 }
 
 @theme inline {
@@ -12,15 +81,89 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* ── Sidebar nav scrollbar (only visible on hover) ── */
+.sidebar-nav-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-nav-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.sidebar-scope:hover .sidebar-nav-scroll::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+}
+.sidebar-nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+.sidebar-link:hover {
+  background: var(--sidebar-hover) !important;
+  border-color: var(--sidebar-hover-border) !important;
+  box-shadow: var(--sidebar-hover-shadow);
+  color: var(--foreground) !important;
+  transform: translateX(2px);
+}
+
+.sidebar-link-active:hover {
+  background: var(--sidebar-active) !important;
+  border-color: var(--sidebar-active-border) !important;
+  box-shadow: var(--sidebar-active-shadow);
+  color: var(--sidebar-active-text) !important;
+  transform: none;
+}
+
+/* ── Animations ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+.resource-card:hover {
+  border-color: var(--accent) !important;
+  box-shadow: var(--card-hover-shadow);
+}
+
+/* Page transition: applied to main content wrapper */
+main > div:first-child {
+  animation: fade-in-up 0.3s ease-out both;
 }
