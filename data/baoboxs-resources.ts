@@ -17516,6 +17516,29 @@ export const baoboxsResources: Resource[] = [
     "requiresLogin": true
   },
   {
+    "id": "baoboxs-snapwc",
+    "name": "SnapWC",
+    "url": "https://snapwc.com/zh",
+    "description": "在线免费下载视频、音频和图片，支持 10000+ 网站",
+    "category": "media",
+    "subcategory": "影音影视",
+    "icon": "https://snapwc.com/favicon.ico",
+    "tags": [
+      "音乐 | 影视",
+      "影音影视",
+      "CN",
+      "免费"
+    ],
+    "source": "baoboxs",
+    "sourceId": "snapwc",
+    "sourceCategory": "音乐 | 影视",
+    "sourceGroup": "影音影视",
+    "lang": "CN",
+    "charge": 1,
+    "shortCode": "snapwc",
+    "requiresLogin": false
+  },
+  {
     "id": "baoboxs-588",
     "name": "视频素材下载",
     "url": "https://www.videvo.net",

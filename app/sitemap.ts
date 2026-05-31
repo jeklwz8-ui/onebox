@@ -39,5 +39,53 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/about`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/terms`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/guides`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/guides/how-to-use-online-tools`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.55,
+    },
+    {
+      url: `${BASE_URL}/guides/developer-resource-navigation`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.55,
+    },
+    {
+      url: `${BASE_URL}/guides/video-audio-image-download-tools`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.55,
+    },
   ];
 }
