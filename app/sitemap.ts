@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
+import { ADSENSE_REVIEW_HIDDEN_CATEGORIES, ADSENSE_REVIEW_MODE } from "@/data/adsense-review";
 import { categories } from "@/data/categories";
+import { guideArticles } from "@/data/guides";
 
 const BASE_URL = "https://baoboxs.top";
+const RESERVED_CATEGORY_ROUTES = new Set(["moyu"]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -14,7 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...categories
-      .filter((category) => category.id !== "home")
+      .filter((category) => {
+        if (category.id === "home") return false;
+        if (RESERVED_CATEGORY_ROUTES.has(category.id)) return false;
+        return !ADSENSE_REVIEW_MODE || !ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(category.id);
+      })
       .map((category) => ({
         url: `${BASE_URL}/${category.id}`,
         lastModified: now,
@@ -69,23 +76,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.6,
     },
-    {
-      url: `${BASE_URL}/guides/how-to-use-online-tools`,
+    ...guideArticles.map((article) => ({
+      url: `${BASE_URL}/guides/${article.slug}`,
       lastModified: now,
-      changeFrequency: "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.55,
-    },
-    {
-      url: `${BASE_URL}/guides/developer-resource-navigation`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.55,
-    },
-    {
-      url: `${BASE_URL}/guides/video-audio-image-download-tools`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.55,
-    },
+    })),
   ];
 }

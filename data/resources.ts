@@ -1,8 +1,36 @@
 import type { Resource } from "./resource-types";
+import { ADSENSE_REVIEW_HIDDEN_CATEGORIES, ADSENSE_REVIEW_MODE } from "./adsense-review";
 import { baseResources } from "./base-resources";
 import { baoboxsResources } from "./baoboxs-resources";
 
 export type { Resource };
+
+const ADSENSE_REVIEW_RISK_KEYWORDS = [
+  "kms",
+  "bt",
+  "破解",
+  "激活",
+  "永久激活",
+  "激活码",
+  "激活工具",
+  "磁力",
+  "种子",
+  "盗版",
+  "奈飞",
+  "电影下载",
+  "影视资源",
+  "影视下载",
+  "在线观看",
+  "在线播放",
+  "资源站",
+  "资源采集",
+  "资源搜索",
+  "网盘资源",
+  "云盘资源",
+  "免费下载电影",
+  "免费下载视频",
+  "免费获取音乐",
+];
 
 function normalizeResourceUrl(url: string): string {
   try {
@@ -23,9 +51,38 @@ function mergeResources(): Resource[] {
   ];
 }
 
-export const resources: Resource[] = mergeResources();
+function getResourceReviewText(resource: Resource): string {
+  return [
+    resource.name,
+    resource.description,
+    resource.category,
+    resource.subcategory,
+    resource.sourceCategory,
+    resource.sourceGroup,
+    ...(resource.tags ?? []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
 
-const baoboxsHotResources = baoboxsResources.filter((resource) => resource.category === "hot");
+export function isResourceVisibleForAdsenseReview(resource: Resource): boolean {
+  if (!ADSENSE_REVIEW_MODE) return true;
+  if (ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(resource.category)) return false;
+
+  const haystack = getResourceReviewText(resource);
+  return !ADSENSE_REVIEW_RISK_KEYWORDS.some((keyword) => haystack.includes(keyword.toLowerCase()));
+}
+
+function getPublicResources(items: Resource[]): Resource[] {
+  return ADSENSE_REVIEW_MODE ? items.filter(isResourceVisibleForAdsenseReview) : items;
+}
+
+const allResources: Resource[] = mergeResources();
+
+export const resources: Resource[] = getPublicResources(allResources);
+
+const baoboxsHotResources = getPublicResources(baoboxsResources).filter((resource) => resource.category === "hot");
 
 function getHotResources(): Resource[] {
   const ordered: Resource[] = [...baoboxsHotResources];

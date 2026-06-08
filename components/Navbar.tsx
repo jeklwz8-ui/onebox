@@ -71,8 +71,16 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
     let cancelled = false;
 
     async function runSearch() {
-      const { searchResources } = await import("@/data/resources");
-      if (!cancelled) setResults(searchResources(trimmed).slice(0, 12));
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`, {
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Search request failed");
+        const nextResults = (await response.json()) as Resource[];
+        if (!cancelled) setResults(nextResults);
+      } catch {
+        if (!cancelled) setResults([]);
+      }
     }
 
     runSearch();

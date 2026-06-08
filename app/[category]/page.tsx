@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { ADSENSE_REVIEW_HIDDEN_CATEGORIES, ADSENSE_REVIEW_MODE } from "@/data/adsense-review";
 import { categories } from "@/data/categories";
 import {
   getResourcesByCategory,
@@ -11,15 +12,23 @@ interface Props {
   params: Promise<{ category: string }>;
 }
 
+const RESERVED_CATEGORY_ROUTES = new Set(["moyu"]);
+
 export async function generateStaticParams() {
   return categories
-    .filter((category) => category.id !== "home")
+    .filter((category) => {
+      if (category.id === "home") return false;
+      if (RESERVED_CATEGORY_ROUTES.has(category.id)) return false;
+      return !ADSENSE_REVIEW_MODE || !ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(category.id);
+    })
     .map((category) => ({ category: category.id }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { category } = await params;
   const cat = categories.find((item) => item.id === category);
+  if (RESERVED_CATEGORY_ROUTES.has(category)) return {};
+  if (ADSENSE_REVIEW_MODE && ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(category)) return {};
   if (!cat) return {};
   return {
     title: `${cat.label} - 百宝箱`,
@@ -30,7 +39,14 @@ export async function generateMetadata({ params }: Props) {
 export default async function CategoryPage({ params }: Props) {
   const { category } = await params;
   const cat = categories.find((item) => item.id === category);
-  if (!cat || cat.id === "home") notFound();
+  if (
+    !cat ||
+    cat.id === "home" ||
+    RESERVED_CATEGORY_ROUTES.has(cat.id) ||
+    (ADSENSE_REVIEW_MODE && ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(cat.id))
+  ) {
+    notFound();
+  }
 
   const allResources = getResourcesByCategory(category);
   const subcategories = getSubcategoriesByCategory(category);

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { navGroups } from "@/data/navigation";
 import {
   getFeaturedResources,
@@ -63,6 +64,65 @@ export default function HomePage() {
           className="pointer-events-none absolute right-[-80px] top-[-80px] h-64 w-64 rounded-full blur-3xl"
           style={{ background: "var(--hero-glow)" }}
         />
+      </section>
+
+      <section
+        className="rounded-2xl border px-5 py-5 sm:px-6"
+        style={{
+          background: "var(--card)",
+          borderColor: "var(--card-border)",
+          boxShadow: "0 12px 32px rgba(15,23,42,0.06)",
+        }}
+      >
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+          <div>
+            <span
+              className="inline-flex h-8 items-center rounded-full border px-3 text-[12px] font-semibold"
+              style={{
+                color: "var(--accent)",
+                background: "var(--nav-pill-bg)",
+                borderColor: "var(--nav-pill-border)",
+              }}
+            >
+              工具导航与使用指南
+            </span>
+            <h1 className="mt-3 text-[24px] font-black leading-tight sm:text-[30px]" style={{ color: "var(--foreground)" }}>
+              百宝箱：把常用在线工具整理成清晰的效率工作台
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm leading-7 sm:text-[15px]" style={{ color: "var(--muted)" }}>
+              百宝箱面向开发者、站长、设计协作和日常办公用户，整理 AI 工具、开发调试、文本处理、图片处理、文档转换、云服务和学习资源。每个入口都尽量保留名称、分类和用途说明，帮助用户先理解工具适合解决什么问题，再决定是否打开使用。
+            </p>
+            <p className="mt-3 max-w-3xl text-sm leading-7 sm:text-[15px]" style={{ color: "var(--muted)" }}>
+              使用在线工具时，建议先判断数据敏感程度。公开内容、测试样例和临时格式转换可以使用在线工具快速处理；合同、账号、密钥、客户资料、未公开代码和生产日志，应优先选择本地软件或可信系统。本站的目标不是堆砌外链，而是把常见工具按任务场景组织起来，减少重复搜索和误点成本。
+            </p>
+          </div>
+          <div
+            className="rounded-xl border p-4"
+            style={{ background: "var(--bg-secondary)", borderColor: "var(--card-border)" }}
+          >
+            <h2 className="text-[15px] font-bold" style={{ color: "var(--foreground)" }}>
+              推荐使用方式
+            </h2>
+            <div className="mt-3 space-y-3 text-sm leading-6" style={{ color: "var(--muted)" }}>
+              <p>
+                <strong style={{ color: "var(--foreground)" }}>按任务找工具：</strong>
+                先选择开发、效率、设计、学习等模块，再根据描述判断入口是否匹配当前任务。
+              </p>
+              <p>
+                <strong style={{ color: "var(--foreground)" }}>收藏高频入口：</strong>
+                对长期稳定、结果可靠的工具加入收藏，减少下一次处理同类问题的搜索时间。
+              </p>
+              <p>
+                <strong style={{ color: "var(--foreground)" }}>阅读原创指南：</strong>
+                进入
+                <Link className="mx-1 font-semibold" href="/guides" style={{ color: "var(--accent)" }}>
+                  使用指南
+                </Link>
+                了解文件处理、图片处理、在线工具安全和站长检测的基础方法。
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <SectionNav
