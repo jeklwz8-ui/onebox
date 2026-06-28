@@ -15,7 +15,6 @@ const FOOTER_LINKS = [
     title: "常用",
     items: [
       { label: "收藏夹", href: "/favorites" },
-      { label: "摸鱼专区", href: "/moyu" },
       { label: "使用指南", href: "/guides" },
     ],
   },

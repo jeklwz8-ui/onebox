@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { Geist } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import AppShell from "@/components/AppShell";
 import { getCategoryCounts } from "@/data/resources";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const THEME_KEY = "dev-nav-theme";
 
@@ -27,12 +21,12 @@ try {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://baoboxs.top"),
-  title: "百宝箱 - 程序员一站式工具导航",
-  description: "百宝箱是面向开发者和效率用户的一站式资源导航平台，汇集 AI 工具、开发工具、学习资源、云服务和实用网站。",
-  keywords: ["百宝箱", "程序员导航", "开发者工具", "AI 工具", "效率工具", "资源导航"],
+  title: "百宝箱 - 工具指南与效率工作台",
+  description: "百宝箱是面向开发者、站长和效率用户的工具指南平台，提供原创使用指南、精选工具详情、在线工具、安全建议和网站管理参考。",
+  keywords: ["百宝箱", "工具指南", "效率工具", "开发者工具", "站长工具", "在线工具", "AI 工具"],
   openGraph: {
-    title: "百宝箱 - 程序员一站式工具导航",
-    description: "百宝箱是面向开发者和效率用户的一站式资源导航平台，汇集 AI 工具、开发工具、学习资源、云服务和实用网站。",
+    title: "百宝箱 - 工具指南与效率工作台",
+    description: "百宝箱是面向开发者、站长和效率用户的工具指南平台，提供原创使用指南、精选工具详情、在线工具、安全建议和网站管理参考。",
     url: "https://baoboxs.top",
     siteName: "百宝箱",
     locale: "zh_CN",
@@ -51,7 +45,7 @@ export default async function RootLayout({
   const initialThemeClass = savedTheme === "dark" ? "dark" : "";
 
   return (
-    <html lang="zh-CN" className={`${geistSans.variable} ${initialThemeClass} h-full`} suppressHydrationWarning>
+    <html lang="zh-CN" className={`${initialThemeClass} h-full`} suppressHydrationWarning>
       <head>
         <script
           async

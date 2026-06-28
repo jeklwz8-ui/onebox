@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { Star, ExternalLink, Link2Off } from "lucide-react";
 import type { Resource } from "@/data/resource-types";
+import { isPublicToolDetailId } from "@/data/public-tool-detail-ids";
 import { getFaviconUrl } from "@/lib/utils";
 import {
   FAVORITES_CHANGED_EVENT,
@@ -54,6 +55,10 @@ export default function ResourceCard({
 
   function openResource() {
     if (!hasUrl) return;
+    if (isPublicToolDetailId(resource.id)) {
+      window.location.href = `/tools/${resource.id}`;
+      return;
+    }
     window.open(resource.url, "_blank", "noopener,noreferrer");
   }
 
@@ -114,6 +119,7 @@ export default function ResourceCard({
             </span>
             {hasUrl ? (
               <ExternalLink
+                aria-label={isPublicToolDetailId(resource.id) ? "查看工具详情" : "打开外部网站"}
                 size={12}
                 className="mt-px shrink-0 opacity-0 transition-opacity group-hover:opacity-45"
                 style={{ color: "var(--muted)" }}

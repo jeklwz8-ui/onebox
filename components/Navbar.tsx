@@ -10,6 +10,7 @@ import { categories } from "@/data/categories";
 import { getFaviconUrl } from "@/lib/utils";
 import { FAVORITES_CHANGED_EVENT, getFavoriteIds } from "@/lib/bookmarks";
 import type { Resource } from "@/data/resource-types";
+import { isPublicToolDetailId } from "@/data/public-tool-detail-ids";
 
 interface NavbarProps {
   onSidebarToggle?: () => void;
@@ -190,6 +191,8 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
                 )}
                 {visibleResults.map((resource, index) => {
                   const hasUrl = resource.url.trim().length > 0;
+                  const resultHref = isPublicToolDetailId(resource.id) ? `/tools/${resource.id}` : resource.url;
+                  const isInternalResult = resultHref.startsWith("/");
                   const content = (
                     <>
                       <img
@@ -229,12 +232,25 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
                     );
                   }
 
+                  if (isInternalResult) {
+                    return (
+                      <Link
+                        key={`${resource.id}-${resource.category}-${index}`}
+                        href={resultHref}
+                        className="flex items-center gap-3 px-4 py-3 hover:opacity-80 transition-opacity border-b last:border-b-0"
+                        style={{ borderColor: "var(--card-border)" }}
+                      >
+                        {content}
+                      </Link>
+                    );
+                  }
+
                   return (
                     <a
                       key={`${resource.id}-${resource.category}-${index}`}
-                      href={resource.url}
+                      href={resultHref}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer nofollow"
                       className="flex items-center gap-3 px-4 py-3 hover:opacity-80 transition-opacity border-b last:border-b-0"
                       style={{ borderColor: "var(--card-border)" }}
                     >
@@ -351,6 +367,8 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
               )}
               {visibleResults.map((resource, index) => {
                 const hasUrl = resource.url.trim().length > 0;
+                const resultHref = isPublicToolDetailId(resource.id) ? `/tools/${resource.id}` : resource.url;
+                const isInternalResult = resultHref.startsWith("/");
                 const content = (
                   <>
                     <img
@@ -390,12 +408,26 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
                   );
                 }
 
+                if (isInternalResult) {
+                  return (
+                    <Link
+                      key={`${resource.id}-${resource.category}-${index}`}
+                      href={resultHref}
+                      onClick={() => setMobileSearchOpen(false)}
+                      className="flex items-center gap-3 border-b px-4 py-3 last:border-b-0"
+                      style={{ borderColor: "var(--card-border)" }}
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+
                 return (
                   <a
                     key={`${resource.id}-${resource.category}-${index}`}
-                    href={resource.url}
+                    href={resultHref}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer nofollow"
                     onClick={() => setMobileSearchOpen(false)}
                     className="flex items-center gap-3 border-b px-4 py-3 last:border-b-0"
                     style={{ borderColor: "var(--card-border)" }}

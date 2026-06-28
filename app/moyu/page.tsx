@@ -5,6 +5,10 @@ import SectionNav from "@/components/SectionNav";
 export const metadata = {
   title: "摸鱼专区 - 百宝箱",
   description: "摸鱼休闲好去处，工作之余放松一下",
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function MoyuPage() {

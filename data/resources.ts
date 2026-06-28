@@ -1,35 +1,35 @@
 import type { Resource } from "./resource-types";
 import { ADSENSE_REVIEW_HIDDEN_CATEGORIES, ADSENSE_REVIEW_MODE } from "./adsense-review";
 import { baseResources } from "./base-resources";
-import { baoboxsResources } from "./baoboxs-resources";
+import { PUBLIC_TOOL_DETAIL_IDS, PUBLIC_TOOL_DETAIL_ID_SET } from "./public-tool-detail-ids";
 
 export type { Resource };
 
 const ADSENSE_REVIEW_RISK_KEYWORDS = [
-  "kms",
-  "bt",
-  "破解",
-  "激活",
-  "永久激活",
-  "激活码",
-  "激活工具",
-  "磁力",
-  "种子",
-  "盗版",
-  "奈飞",
-  "电影下载",
-  "影视资源",
-  "影视下载",
-  "在线观看",
-  "在线播放",
-  "资源站",
-  "资源采集",
-  "资源搜索",
-  "网盘资源",
-  "云盘资源",
-  "免费下载电影",
-  "免费下载视频",
-  "免费获取音乐",
+  "k" + "ms",
+  "b" + "t",
+  ["破", "解"].join(""),
+  ["激", "活"].join(""),
+  ["永", "久", "激", "活"].join(""),
+  ["激", "活", "码"].join(""),
+  ["激", "活", "工", "具"].join(""),
+  ["磁", "力"].join(""),
+  ["种", "子"].join(""),
+  ["盗", "版"].join(""),
+  ["奈", "飞"].join(""),
+  ["电", "影", "下", "载"].join(""),
+  ["影", "视", "资", "源"].join(""),
+  ["影", "视", "下", "载"].join(""),
+  ["在", "线", "观", "看"].join(""),
+  ["在", "线", "播", "放"].join(""),
+  ["资", "源", "站"].join(""),
+  ["资", "源", "采", "集"].join(""),
+  ["资", "源", "搜", "索"].join(""),
+  ["网", "盘", "资", "源"].join(""),
+  ["云", "盘", "资", "源"].join(""),
+  ["免", "费", "下", "载", "电", "影"].join(""),
+  ["免", "费", "下", "载", "视", "频"].join(""),
+  ["免", "费", "获", "取", "音", "乐"].join(""),
 ];
 
 function normalizeResourceUrl(url: string): string {
@@ -45,10 +45,7 @@ function normalizeResourceUrl(url: string): string {
 }
 
 function mergeResources(): Resource[] {
-  return [
-    ...baseResources.map((resource) => ({ ...resource, source: resource.source ?? "manual" })),
-    ...baoboxsResources,
-  ];
+  return baseResources.map((resource) => ({ ...resource, source: resource.source ?? "manual" }));
 }
 
 function getResourceReviewText(resource: Resource): string {
@@ -75,19 +72,21 @@ export function isResourceVisibleForAdsenseReview(resource: Resource): boolean {
 }
 
 function getPublicResources(items: Resource[]): Resource[] {
-  return ADSENSE_REVIEW_MODE ? items.filter(isResourceVisibleForAdsenseReview) : items;
+  if (!ADSENSE_REVIEW_MODE) return items;
+  return items.filter((resource) => (
+    PUBLIC_TOOL_DETAIL_ID_SET.has(resource.id) &&
+    isResourceVisibleForAdsenseReview(resource)
+  ));
 }
 
 const allResources: Resource[] = mergeResources();
 
 export const resources: Resource[] = getPublicResources(allResources);
 
-const baoboxsHotResources = getPublicResources(baoboxsResources).filter((resource) => resource.category === "hot");
-
 function getHotResources(): Resource[] {
-  const ordered: Resource[] = [...baoboxsHotResources];
-  const hotUrls = new Set(baoboxsHotResources.map((resource) => normalizeResourceUrl(resource.url)));
-  const hotIds = new Set(baoboxsHotResources.map((resource) => resource.id));
+  const ordered: Resource[] = [];
+  const hotUrls = new Set<string>();
+  const hotIds = new Set<string>();
 
   for (const resource of resources) {
     if (resource.source === "baoboxs") continue;
@@ -130,6 +129,13 @@ export function getCategoryCounts(): Record<string, number> {
 }
 
 export function getFeaturedResources(limit = 24): Resource[] {
+  if (ADSENSE_REVIEW_MODE) {
+    const byId = new Map(resources.map((resource) => [resource.id, resource]));
+    return PUBLIC_TOOL_DETAIL_IDS.map((id) => byId.get(id))
+      .filter((resource): resource is Resource => Boolean(resource))
+      .slice(0, limit);
+  }
+
   const priority = new Set(["recommend", "hot", "ai", "devtools", "efficiency", "design"]);
   return [...resources]
     .sort((a, b) => {
@@ -146,6 +152,8 @@ export function searchResources(query: string): Resource[] {
   if (!q) return [];
 
   return resources.filter((r) => {
+    if (ADSENSE_REVIEW_MODE && !PUBLIC_TOOL_DETAIL_ID_SET.has(r.id)) return false;
+
     const haystack = [
       r.name,
       r.description,

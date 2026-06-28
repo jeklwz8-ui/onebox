@@ -33,6 +33,10 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${cat.label} - 百宝箱`,
     description: cat.description,
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 
