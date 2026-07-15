@@ -3,19 +3,11 @@ import { Code2 } from "lucide-react";
 
 const FOOTER_LINKS = [
   {
-    title: "导航",
+    title: "内容",
     items: [
       { label: "首页", href: "/" },
-      { label: "AI 工具", href: "/ai" },
-      { label: "前端开发", href: "/frontend" },
-      { label: "在线工具", href: "/tools" },
-    ],
-  },
-  {
-    title: "常用",
-    items: [
-      { label: "收藏夹", href: "/favorites" },
       { label: "使用指南", href: "/guides" },
+      { label: "在线工具", href: "/tools" },
     ],
   },
   {
@@ -25,14 +17,6 @@ const FOOTER_LINKS = [
       { label: "隐私政策", href: "/privacy" },
       { label: "服务条款", href: "/terms" },
       { label: "联系方式", href: "/contact" },
-    ],
-  },
-  {
-    title: "资源",
-    items: [
-      { label: "GitHub", href: "https://github.com", external: true },
-      { label: "MDN", href: "https://developer.mozilla.org", external: true },
-      { label: "Vercel", href: "https://vercel.com", external: true },
     ],
   },
 ];
@@ -47,8 +31,8 @@ export default function Footer() {
       }}
     >
       <div className="mx-auto max-w-screen-2xl px-4 py-5 sm:px-6 sm:py-8">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
-          <div className="col-span-2 sm:col-span-1">
+        <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_180px_180px] sm:gap-8">
+          <div>
             <div className="mb-2 flex items-center gap-2">
               <div
                 className="flex h-7 w-7 items-center justify-center rounded-lg"
@@ -60,8 +44,8 @@ export default function Footer() {
                 百宝箱
               </span>
             </div>
-            <p className="text-[11px] leading-relaxed sm:text-[12px]" style={{ color: "var(--muted)" }}>
-              面向开发者和效率用户的一站式资源导航平台，聚合常用工具、学习资源与实用网站。
+            <p className="max-w-xl text-[11px] leading-relaxed sm:text-[12px]" style={{ color: "var(--muted)" }}>
+              百宝箱是面向站长、开发者和效率用户的工具指南站，提供原创使用说明、上线检查清单、精选工具详情和安全使用建议。
             </p>
           </div>
 
@@ -76,25 +60,13 @@ export default function Footer() {
               <ul className="flex flex-col gap-2">
                 {col.items.map((item) => (
                   <li key={item.href}>
-                    {"external" in item && item.external ? (
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[12px] transition-opacity hover:opacity-70"
-                        style={{ color: "var(--foreground)" }}
-                      >
-                        {item.label}
-                      </a>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="text-[12px] transition-opacity hover:opacity-70"
-                        style={{ color: "var(--foreground)" }}
-                      >
-                        {item.label}
-                      </Link>
-                    )}
+                    <Link
+                      href={item.href}
+                      className="text-[12px] transition-opacity hover:opacity-70"
+                      style={{ color: "var(--foreground)" }}
+                    >
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -106,8 +78,8 @@ export default function Footer() {
           className="mt-5 flex flex-col gap-1.5 pt-4 text-[11px] sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:pt-5"
           style={{ borderTop: "1px solid var(--card-border)", color: "var(--muted)" }}
         >
-          <span>用 ❤️ 构建</span>
-          <span>声明：本站收录的第三方站点，版权与内容责任归原站点所有。</span>
+          <span>用心构建</span>
+          <span>声明：外部工具的内容、价格、隐私规则和可用性以对应网站官方说明为准。</span>
         </div>
       </div>
     </footer>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ChevronLeft, ChevronRight, ChevronDown, Search, X, Star,
+  ChevronLeft, ChevronRight, ChevronDown, Search, X,
 } from "lucide-react";
 import { categories } from "@/data/categories";
 import { navGroups } from "@/data/navigation";
@@ -102,46 +102,6 @@ function NavItem({
           }}
         >
           {label}{typeof count === "number" && count > 0 ? ` · ${count} 项` : ""}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function ShortcutItem({
-  href, icon, label, active, collapsed, onClick,
-}: {
-  href: string; icon: React.ReactNode; label: string;
-  active: boolean; collapsed: boolean; onClick?: () => void;
-}) {
-  return (
-    <div className="relative group/navitem">
-      <Link
-        href={href}
-        onClick={onClick}
-        className={`
-          ${active ? "sidebar-link-active" : "sidebar-link"}
-          relative flex h-9 w-full items-center gap-2 rounded-md border border-transparent px-2.5 text-[15px]
-          transition-[background-color,border-color,box-shadow,color,transform] duration-150 my-[1px]
-          ${active ? "font-bold" : "font-semibold"}
-        `}
-        style={
-          active
-            ? { background: "var(--sidebar-active)", color: "var(--sidebar-active-text)" }
-            : { color: "var(--foreground)" }
-        }
-      >
-        <span className="shrink-0 flex items-center justify-center w-5">
-          {icon}
-        </span>
-        {!collapsed && <span className="truncate flex-1">{label}</span>}
-      </Link>
-      {collapsed && (
-        <span
-          className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 z-[200] px-2.5 py-1 rounded-md text-[12px] font-medium whitespace-nowrap opacity-0 group-hover/navitem:opacity-100 transition-opacity duration-150"
-          style={{ background: "var(--tooltip-bg, #1e293b)", color: "var(--tooltip-text, #f1f5f9)", boxShadow: "0 4px 16px rgba(0,0,0,0.18)", border: "1px solid var(--sidebar-border)" }}
-        >
-          {label}
         </span>
       )}
     </div>
@@ -330,20 +290,6 @@ export default function Sidebar({
             </div>
           )}
 
-        {/* ── Favorites shortcut ── */}
-        <div
-          className="mt-3 pt-2"
-          style={{ borderTop: "1px solid var(--sidebar-border)" }}
-        >
-          <ShortcutItem
-            href="/favorites"
-            icon={<Star size={15} />}
-            label="收藏"
-            active={pathname === "/favorites"}
-            collapsed={collapsed}
-            onClick={onClose}
-          />
-        </div>
       </nav>
 
       {/* ── Bottom controls ── */}

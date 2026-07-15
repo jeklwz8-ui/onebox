@@ -4,11 +4,10 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Search, Moon, Sun, Star, X, Code2, Command, PanelLeftClose } from "lucide-react";
+import { Search, Moon, Sun, X, Code2, Command, PanelLeftClose } from "lucide-react";
 import { toggleTheme, getTheme } from "@/lib/theme";
 import { categories } from "@/data/categories";
 import { getFaviconUrl } from "@/lib/utils";
-import { FAVORITES_CHANGED_EVENT, getFavoriteIds } from "@/lib/bookmarks";
 import type { Resource } from "@/data/resource-types";
 import { isPublicToolDetailId } from "@/data/public-tool-detail-ids";
 
@@ -24,20 +23,14 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [favCount, setFavCount] = useState(0);
   const [results, setResults] = useState<Resource[]>([]);
 
   const categoryMap = useMemo(() => new Map(categories.map((category) => [category.id, category])), []);
   const visibleResults = query.trim() ? results : [];
 
   useEffect(() => {
-    function refreshCounts() {
-      setFavCount(getFavoriteIds().length);
-    }
-
     const id = window.setTimeout(() => {
       setIsDark(getTheme() === "dark");
-      refreshCounts();
       setMounted(true);
     }, 0);
 
@@ -48,20 +41,10 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
       }
     }
 
-    function onStorage(e: StorageEvent) {
-      if (e.key === "dev-nav-favorites") {
-        refreshCounts();
-      }
-    }
-
     window.addEventListener("keydown", onKey);
-    window.addEventListener(FAVORITES_CHANGED_EVENT, refreshCounts);
-    window.addEventListener("storage", onStorage);
     return () => {
       window.clearTimeout(id);
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener(FAVORITES_CHANGED_EVENT, refreshCounts);
-      window.removeEventListener("storage", onStorage);
     };
   }, []);
 
@@ -286,9 +269,6 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
           >
             <Search size={17} />
           </button>
-          <IconLink href="/favorites" title="收藏" count={mounted ? favCount : 0}>
-            <Star size={17} />
-          </IconLink>
           <button
             onClick={handleToggleTheme}
             className="relative h-9 rounded-lg flex items-center justify-center gap-1.5 px-2.5 transition-colors"
@@ -441,39 +421,5 @@ export default function Navbar({ onSidebarToggle }: NavbarProps) {
         </div>
       )}
     </header>
-  );
-}
-
-function IconLink({
-  href, title, count, children,
-}: {
-  href: string; title: string; count: number; children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      title={title}
-      className="relative h-9 rounded-lg flex items-center justify-center gap-1.5 px-2.5 transition-colors"
-      style={{ color: "var(--muted)" }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.background = "var(--sidebar-hover)";
-        (e.currentTarget as HTMLAnchorElement).style.color = "var(--foreground)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-        (e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)";
-      }}
-    >
-      {children}
-      <span className="hidden md:inline text-[13px] font-medium">{title}</span>
-      {count > 0 && (
-        <span
-          className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 rounded-full text-[10px] font-bold flex items-center justify-center"
-          style={{ background: "var(--accent)", color: "#fff" }}
-        >
-          {count > 99 ? "99+" : count}
-        </span>
-      )}
-    </Link>
   );
 }

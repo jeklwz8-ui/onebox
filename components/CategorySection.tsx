@@ -32,12 +32,6 @@ export default function CategorySection({
         >
           {title}
         </h2>
-        <span
-          className="text-xs px-2.5 py-1 rounded-full font-bold"
-          style={{ background: "var(--tag-bg)", color: "var(--tag-text)" }}
-        >
-          {resources.length}
-        </span>
         <div
           className="flex-1 h-px"
           style={{ background: "var(--card-border)" }}

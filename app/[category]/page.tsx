@@ -12,13 +12,10 @@ interface Props {
   params: Promise<{ category: string }>;
 }
 
-const RESERVED_CATEGORY_ROUTES = new Set(["moyu"]);
-
 export async function generateStaticParams() {
   return categories
     .filter((category) => {
       if (category.id === "home") return false;
-      if (RESERVED_CATEGORY_ROUTES.has(category.id)) return false;
       return !ADSENSE_REVIEW_MODE || !ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(category.id);
     })
     .map((category) => ({ category: category.id }));
@@ -27,7 +24,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const { category } = await params;
   const cat = categories.find((item) => item.id === category);
-  if (RESERVED_CATEGORY_ROUTES.has(category)) return {};
   if (ADSENSE_REVIEW_MODE && ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(category)) return {};
   if (!cat) return {};
   return {
@@ -46,7 +42,6 @@ export default async function CategoryPage({ params }: Props) {
   if (
     !cat ||
     cat.id === "home" ||
-    RESERVED_CATEGORY_ROUTES.has(cat.id) ||
     (ADSENSE_REVIEW_MODE && ADSENSE_REVIEW_HIDDEN_CATEGORIES.has(cat.id))
   ) {
     notFound();
